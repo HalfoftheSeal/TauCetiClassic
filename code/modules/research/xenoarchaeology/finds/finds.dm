@@ -97,7 +97,7 @@
 	if(new_item_type)
 		find_type = new_item_type
 	else
-		find_type = rand(1,38) // update this when you add new find types
+		find_type = rand(1,39) // update this when you add new find types
 
 	var/item_type = "object"
 	icon_state = "unknown[rand(1,4)]"
@@ -498,7 +498,24 @@
 			G.desc = "Though it is strange that the gourd's medicinal waters refill automatically, the seeds within may hold the secret to how it works."
 			G.restore_reagent = pick("paracetamol", "tricordrazine", "hyperzine")
 			new_item = G
-
+		if(39)
+			var/spawn_type = pick(list(
+			/obj/item/weapon/gun/energy/laser		=	75,		//75% chance to be a normal gun
+			/obj/item/weapon/gun/energy/laser/selfcharging/alien	=	25,		//25% chance to be self-recharging
+		))
+			var/obj/item/weapon/gun/energy/new_gun = new spawn_type(loc)
+			new_item = new_gun
+			new_gun.icon = 'icons/obj/xenoarchaeology/finds.dmi'
+			new_gun.icon_state = "egun[rand(1,4)]"
+			new_gun.desc = ""
+			new_gun.ammo_type = list()
+			new_gun.ammo_type = pick(list(		//Randomize the beam it fires. Standard laser deals 30 burn.
+				/obj/item/ammo_casing/energy/laser,
+				/obj/item/ammo_casing/energy/electrode,
+				/obj/item/ammo_casing/energy/laser/practice,
+				/obj/item/ammo_casing/energy/laser/heavy,	//60 damage
+				/obj/item/ammo_casing/energy/bolt,	//Ebow bolts
+	))
 	var/decorations = ""
 	if(apply_material_decorations)
 		source_material = pick("cordite","quadrinium","steel","titanium","aluminium","ferritic-alloy","plasteel","duranium")
